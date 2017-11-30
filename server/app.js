@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('./configs/database');
 // Lesson 1: Require mongoose
 // Lesson 2: Require dotenv configuration
 
