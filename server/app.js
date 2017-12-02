@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('./configs/database');
+const dotenv = require('dotenv');
+require('.env');
 // Lesson 1: Require mongoose
 // Lesson 2: Require dotenv configuration
 
@@ -27,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'jade');
 
 require('./routes')(app);
+
 
 // error handler
 app.use(function(err, req, res, next) {
