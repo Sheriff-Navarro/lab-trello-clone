@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const cardSchema = new mongoose.Schema({  
+const cardSchema = new mongoose.Schema({
   title: {
     type: String,
     require: true
@@ -23,4 +23,4 @@ const cardSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Card', cardSchema);  
+module.exports = mongoose.model('Card', cardSchema);

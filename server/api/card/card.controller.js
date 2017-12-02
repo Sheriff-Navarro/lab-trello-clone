@@ -9,18 +9,25 @@ exports.createCard = function(req, res, next) {
 		description: req.body.description,
 		dueDate: req.body.dueDate,
 		list: req.body.list,
-        position: req.body.position
+    position: req.body.position
 	});
+
+	const listId = req.body.list;
+	// const cardId = newCard._id;
 
 	newCard.save(function(err, card) {
 		if(err) {
       console.log(err);
 			return res.send(500);
 		}
-
 		// Update the corresponding list
 		// Lesson 2: Update the current list
+		listModel.findByIdAndUpdate({ _id: listId}, { $push: { cards: card._id}}).exec()
+		res.json({
+			title: card.title,
+			message: "Card created!"})
 	});
+
 };
 
 exports.editCard = function(req, res ,next) {
@@ -49,7 +56,7 @@ exports.transferCard = function(req, res ,next) {
 			}
 
 			return Promise.all([
-				listModel.findByIdAndUpdate({ _id: sourceList }, { $pull: { cards: cardId }}).exec(),
+				listModel.findByIdAndUpdate({ _id: sourceList }, { $unset: { cards: cardId }}).exec(),
 				listModel.findByIdAndUpdate({ _id: targetList }, { $push: { cards: cardId }}).exec()
 			]).then(
 				(list) => {

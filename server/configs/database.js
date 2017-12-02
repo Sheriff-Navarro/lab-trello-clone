@@ -1,8 +1,8 @@
 'use strict';
 require('dotenv').config();
-require('.env');
+// require('.env');
 const mongoose = require('mongoose')
-// const dbName = 'irontrello';
+const dbName = 'irontrello';
 
 mongoose.connect(process.env.MONGODB_URI);
 
