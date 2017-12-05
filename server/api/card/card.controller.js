@@ -52,12 +52,13 @@ exports.transferCard = function(req, res ,next) {
 	cardModel
 		.findByIdAndUpdate({ _id: cardId }, { $set: card }, function(err, card) {
 			if(err) {
-				return res.status(400).json({ message: 'unable to update card', error: err });
+				console.log("Error = ", err);
+				return res.status(400).json({ message: 'Unable to update card', error: err });
 			}
 
 			return Promise.all([
-				listModel.findByIdAndUpdate({ _id: sourceList }, { $unset: { cards: cardId }}).exec(),
-				listModel.findByIdAndUpdate({ _id: targetList }, { $push: { cards: cardId }}).exec()
+				listModel.findByIdAndUpdate({ _id: sourceList }, { $pull: { cards: card._id }}, {new: true}).exec(),
+				listModel.findByIdAndUpdate({ _id: targetList }, { $push: { cards: card._id }}, {new: true}).exec()
 			]).then(
 				(list) => {
 					return res.json({ message: 'card successfully updated', list: list })
